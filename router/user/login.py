@@ -11,7 +11,7 @@ from email.mime.text import MIMEText
 
 from models import User, LoginUser, VerifyEmail, AuthorizationStorage
 from form import Error, ErrorForm
-from utils import Email, find_and_get_lambda, user_authorization
+from utils import Email, find_and_get_lambda
 
 router = InferringRouter()
 rate_limiter = Limiter(key_func=get_remote_address)
@@ -228,33 +228,6 @@ class Login:
         await authorization.delete()
         return {"code": "LOGOUT_SUCCESS", "message": "로그아웃이 완료되었습니다."}
 
-    @router.post("/me/edit")
-    async def edit_profile(
-        self,
-        request: Request,
-        authorization: User = Depends(user_authorization),
-        nick: Optional[str] = Query(
-            None,
-            title="변경할 유저 닉네임을 입력하세요.",
-            description="변경할 유저 닉네임을 입력합니다. 중복이 가능합니다.",
-        ),
-        bio: Optional[str] = Query(
-            None,
-            title="변경할 유저 소개를 입력하세요.",
-            description="변경할 유저 소개를 입력합니다.유저 소개는 프로필에 표시됩니다.",
-        ),
-        profile_url: Optional[str] = Query(
-            None,
-            title="변경할 유저 프로필 url를 입력하세요.",
-            description="변경할 유저 프로필 url를 입력합니다. url만 입력이 가능합니다.",
-        ),
-        banner_url: Optional[str] = Query(
-            None,
-            title="변경할 유저 배너 url를 입력하세요.",
-            description="변경할 유저 배너 url를 입력합니다. url만 입력이 가능합니다.",
-        ),
-    ):
-        ...
 
     @staticmethod
     async def email_verify(email: str, content: str) -> None:
