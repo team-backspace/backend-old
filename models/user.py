@@ -24,7 +24,7 @@ class User(Model):
     following = fields.ManyToManyField(
         model_name="models.User", related_name="user_following"
     )
-    log = fields.JSONField(default={"login": []})
+    data = fields.JSONField(default={})
 
 
 class LoginUser(Model):
@@ -32,3 +32,14 @@ class LoginUser(Model):
     id = fields.TextField(default=None)
     password = fields.TextField(default=None)
     trusted_device = fields.JSONField(default={"devices": []})
+
+
+class VerifyEmail(Model):
+    code = fields.TextField(pk=True)
+    data = fields.JSONField(default={})
+
+
+class AuthorizationStorage(Model):
+    key = fields.TextField(pk=True)
+    id = fields.TextField(default=None)
+    name = fields.TextField(default="유저")
