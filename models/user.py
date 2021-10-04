@@ -1,4 +1,5 @@
 from __future__ import annotations
+from dataclasses import dataclass
 from tortoise import fields
 from tortoise.models import Model
 
@@ -23,3 +24,11 @@ class User(Model):
     following = fields.ManyToManyField(
         model_name="models.User", related_name="user_following"
     )
+    log = fields.JSONField(default={"login": []})
+
+
+class LoginUser(Model):
+    email = fields.TextField(pk=True)
+    id = fields.TextField(default=None)
+    password = fields.TextField(default=None)
+    trusted_device = fields.JSONField(default={"devices": []})
