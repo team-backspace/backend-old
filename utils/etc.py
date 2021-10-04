@@ -26,7 +26,7 @@ def find_and_get_attribute(iterable: Iterable[T], **attrs: Any) -> Optional[T]:
     return None
 
 
-def find_and_get_lambda(iterable: dict, check: Callable[[Any], Any]) -> Optional[T]:
+def find_and_get_lambda(iterable: list, check: Callable[[Any], Any]) -> Optional[T]:
     for elem in iterable:
         if bool(check(elem)):
             return elem
