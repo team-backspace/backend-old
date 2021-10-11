@@ -1,3 +1,6 @@
 fastapi
 slowapi
 tortoise-orm
+fastapi_utils
+pyyaml
+aiosmtplib
