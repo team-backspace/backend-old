@@ -11,10 +11,11 @@ from email.mime.text import MIMEText
 
 from models import User, LoginUser, VerifyEmail, AuthorizationStorage
 from form import Error, ErrorForm
-from utils import Email, find_and_get_lambda
+from utils import Email, find_and_get_lambda, Database
 
 router = InferringRouter()
 rate_limiter = Limiter(key_func=get_remote_address)
+database = Database()
 
 
 @cbv(router)
@@ -142,6 +143,7 @@ class Login:
                 id=data["data"]["id"],
                 name=data["data"]["nick"],
             )
+            
             await AuthorizationStorage.create(key=access_key, id=data["data"]["id"])
             await verify_email.delete()
             return {
